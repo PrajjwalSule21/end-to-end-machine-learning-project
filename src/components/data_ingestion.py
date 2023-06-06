@@ -24,7 +24,8 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered into the data ingestion method")
         try:
-            df = pd.read_csv("notebook\data\StudentsPerformance.csv")
+            path = r'C:\Users\HP\OneDrive\Desktop\kn-end-to-end-ml-project\notebook\data\StudentsPerformance.csv'
+            df = pd.read_csv(path)
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)

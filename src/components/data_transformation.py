@@ -3,17 +3,17 @@ import os
 from dataclasses import dataclass
 import numpy as np
 import pandas as pd
+from src.exception import CustomException
+from src.logger import logging
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from src.exception import CustomException
-from src.logger import logging
 from src.utils import save_object
 
 @dataclass
-class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('artifacts',"proprocessor.pkl")
+class DataTransformationConfig: 
+    preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
 
 class DataTransformation:
     def __init__(self):
@@ -21,7 +21,7 @@ class DataTransformation:
 
     def get_data_transformer_object(self):
         '''
-        This function si responsible for data trnasformation
+        This function is responsible for data trnasformation
         
         '''
         try:
@@ -62,8 +62,10 @@ class DataTransformation:
 
                 ]
 
-
             )
+
+            logging.info('Pipeline for numerical and categorical completed')
+            
 
             return preprocessor
         
@@ -75,12 +77,10 @@ class DataTransformation:
         try:
             train_df=pd.read_csv(train_path)
             test_df=pd.read_csv(test_path)
-
             logging.info("Read train and test data completed")
 
-            logging.info("Obtaining preprocessing object")
-
             preprocessing_obj=self.get_data_transformer_object()
+            logging.info("Obtaining preprocessing object")
 
             target_column_name="math_score"
             numerical_columns = ["writing_score", "reading_score"]
