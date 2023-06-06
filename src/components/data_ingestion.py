@@ -28,15 +28,19 @@ class DataIngestion:
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
+            logging.info('Make a directory for training data')
 
             df.to_csv(self.ingestion_config.raw_data_path,index=False, header=True)
+            logging.info('Save that dataframe into a csv file name as [data.csv] into the artifacts directory')
 
             logging.info('Train Test Split initiated')
             train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
 
             train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
+            logging.info('Save the train data as a csv file into artifacts folder')
 
             test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
+            logging.info('Save the test data as csv file into artifacts folder')
         
             logging.info('Ingestion of the data has been completed')
             
